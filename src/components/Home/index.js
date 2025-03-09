@@ -1,59 +1,47 @@
-import React, { Component } from 'react';
+import React, { useState } from 'react';
 import { v4 as uuidv4 } from 'uuid';
 import ListItem from '../ListItem';
 import './index.css';
 
-class Home extends Component {
-    state = { todoList: [], name: '' };
+const Home = () => {
+    const [todoList, setTodoList] = useState([]);
+    const [name, setName] = useState('');
 
-    onChangeInp = (event) => {
-        this.setState({ name: event.target.value });
+    const onChangeInp = (event) => {
+        setName(event.target.value);
     };
 
-    onClickAddBtn = () => {
-        const { todoList, name } = this.state;
-
+    const onClickAddBtn = () => {
         if (name.trim() !== '') {
-            const newTodoList = [...todoList, { name, isCompleted: false, id: uuidv4() }];
-            this.setState({ todoList: newTodoList, name: '' });
+            setTodoList([...todoList, { name, isCompleted: false, id: uuidv4() }]);
+            setName('');
         }
     };
 
-    onDelete = (id) => {
-        const { todoList } = this.state;
-        const newTodoList = todoList.filter((eachItem) => eachItem.id !== id);
-        this.setState({ todoList: newTodoList });
+    const onDelete = (id) => {
+        setTodoList(todoList.filter((eachItem) => eachItem.id !== id));
     };
 
-    onCompleted = (id) => {
-        const { todoList } = this.state;
-        const newTodoList = todoList.map((eachItem) => {
-            if (eachItem.id === id) {
-                return { ...eachItem, isCompleted: !eachItem.isCompleted };
-            }
-            return eachItem;
-        });
-        this.setState({ todoList: newTodoList });
+    const onCompleted = (id) => {
+        setTodoList(todoList.map((eachItem) => (
+            eachItem.id === id ? { ...eachItem, isCompleted: !eachItem.isCompleted } : eachItem
+        )));
     };
 
-    render() {
-        const { todoList, name } = this.state;
-
-        return (
-            <div className="container">
-                <h1>Task Tracker</h1>
-                <div className="input-container">
-                    <input type="text" value={name} onChange={this.onChangeInp} placeholder="Enter task" />
-                    <button onClick={this.onClickAddBtn}>Add</button>
-                </div>
-                <ul>
-                    {todoList.map((eachItem) => (
-                        <ListItem key={eachItem.id} data={eachItem} onDelete={this.onDelete} onCompleted={this.onCompleted} />
-                    ))}
-                </ul>
+    return (
+        <div className="container">
+            <h1>Task Tracker</h1>
+            <div className="input-container">
+                <input type="text" value={name} onChange={onChangeInp} placeholder="Enter task" />
+                <button onClick={onClickAddBtn}>Add</button>
             </div>
-        );
-    }
-}
+            <ul>
+                {todoList.map((eachItem) => (
+                    <ListItem key={eachItem.id} data={eachItem} onDelete={onDelete} onCompleted={onCompleted} />
+                ))}
+            </ul>
+        </div>
+    );
+};
 
 export default Home;
