@@ -1,0 +1,50 @@
+.list-item {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    background-color: #fff;
+    padding: 10px;
+    margin: 8px 0;
+    border-radius: 5px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: 0.3s;
+}
+
+.list-item:hover {
+    transform: scale(1.02);
+}
+
+.list-item input[type="checkbox"] {
+    margin-right: 10px;
+    transform: scale(1.2);
+    cursor: pointer;
+}
+
+.list-item h1 {
+    flex: 1;
+    font-size: 18px;
+    color: #333;
+    margin: 0;
+    text-align: left;
+    transition: 0.3s;
+}
+
+.list-item .completed {
+    text-decoration: line-through;
+    color: gray;
+}
+
+.list-item button {
+    background-color: #dc3545;
+    color: white;
+    border: none;
+    padding: 5px 10px;
+    cursor: pointer;
+    font-size: 14px;
+    border-radius: 4px;
+    transition: 0.3s;
+}
+
+.list-item button:hover {
+    background-color: #c82333;
+}
